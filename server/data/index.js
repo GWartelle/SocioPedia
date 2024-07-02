@@ -1,3 +1,4 @@
+/* MOCKUP DATA */
 import mongoose from "mongoose";
 
 const userIds = [
