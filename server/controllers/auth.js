@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import Post from "../models/Post.js";
 
 /* REGISTER USER */
 export const register = async (req, res) => {
@@ -51,6 +52,21 @@ export const login = async (req, res) => {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     delete user.password;
     res.status(200).json({ token, user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/* DELETE USER */
+export const deleteUser = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    await Post.deleteMany({ userId });
+
+    await User.findByIdAndDelete(userId);
+
+    res.status(200).json({ msg: "User deleted successfully." });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
