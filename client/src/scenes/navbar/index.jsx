@@ -103,6 +103,7 @@ const Navbar = () => {
                 <Typography>{fullName}</Typography>
               </MenuItem>
               <MenuItem onClick={() => dispatch(setLogout())}>Log Out</MenuItem>
+              <MenuItem onClick={handleDeleteAccount}>Delete Account</MenuItem>
             </Select>
           </FormControl>
         </FlexBetween>
@@ -179,6 +180,9 @@ const Navbar = () => {
                 </MenuItem>
                 <MenuItem onClick={() => dispatch(setLogout())}>
                   Log Out
+                </MenuItem>
+                <MenuItem onClick={handleDeleteAccount}>
+                  Delete Account
                 </MenuItem>
               </Select>
             </FormControl>
