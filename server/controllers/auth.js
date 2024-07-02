@@ -60,7 +60,7 @@ export const login = async (req, res) => {
 /* DELETE USER */
 export const deleteUser = async (req, res) => {
   try {
-    const userId = req.user._id;
+    const userId = req.params.userId;
 
     await Post.deleteMany({ userId });
 
