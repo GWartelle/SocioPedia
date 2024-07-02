@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
   mode: "light",
@@ -39,8 +41,32 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+    deleteUser: (state) => {
+      state.user = null;
+      state.token = null;
+    },
   },
 });
+
+export const deleteUserAsync = createAsyncThunk(
+  "auth/deleteUser",
+  async (userId, thunkAPI) => {
+    try {
+      const token = thunkAPI.getState().token;
+      const response = await axios.delete(`/auth/delete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.msg === "User deleted successfully.") {
+        return userId;
+      }
+      return thunkAPI.rejectWithValue("Failed to delete user");
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const { setMode, setLogin, setLogout, setFriends, setPosts, setPost } =
   authSlice.actions;
