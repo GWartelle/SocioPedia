@@ -37,9 +37,11 @@ const PostsWidget = ({ userId, isProfile = false }) => {
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const recentPosts = [...posts].reverse();
+
   return (
     <>
-      {posts.map(
+      {recentPosts.map(
         ({
           _id,
           userId,
