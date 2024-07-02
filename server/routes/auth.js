@@ -5,6 +5,6 @@ import { verifyToken } from "./../middleware/auth.js";
 const router = express.Router();
 
 router.post("/login", login);
-router.delete("/delete", verifyToken, deleteUser);
+router.delete("/delete/:userId", verifyToken, deleteUser);
 
 export default router;
