@@ -53,11 +53,14 @@ export const deleteUserAsync = createAsyncThunk(
   async (userId, thunkAPI) => {
     try {
       const token = thunkAPI.getState().token;
-      const response = await axios.delete(`/auth/delete/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.delete(
+        `${process.env.REACT_APP_API_URL}/auth/delete/${userId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       if (response.data.msg === "User deleted successfully.") {
         return userId;
       }
