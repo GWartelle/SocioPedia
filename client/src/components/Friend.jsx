@@ -22,7 +22,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
   const isFriend = friends.find((friend) => friend._id === friendId);
   const location = useLocation();
   const isCurrentUser = friendId === _id;
-  const isOnProfilePage = location.pathname === `/profile/${friendId}`;
+  const isOnProfilePage = location.pathname.startsWith("/profile/");
 
   const patchFriend = async () => {
     const response = await fetch(
