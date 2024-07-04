@@ -11,7 +11,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
   const getPosts = async () => {
     const response = await fetch(`${process.env.REACT_APP_API_URL}/posts`, {
       method: "GET",
-      headers: { Authorization: `Bearer ${token}` },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
     });
     const data = await response.json();
     dispatch(setPosts({ posts: data }));
@@ -22,7 +25,10 @@ const PostsWidget = ({ userId, isProfile = false }) => {
       `${process.env.REACT_APP_API_URL}/posts/${userId}/posts`,
       {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
     const data = await response.json();

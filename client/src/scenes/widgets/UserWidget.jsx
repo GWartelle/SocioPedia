@@ -29,7 +29,10 @@ const UserWidget = ({ userId, picturePath }) => {
       `${process.env.REACT_APP_API_URL}/users/${userId}`,
       {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
     const data = await response.json();

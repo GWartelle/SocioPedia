@@ -16,7 +16,10 @@ const FriendListWidget = ({ userId }) => {
       `${process.env.REACT_APP_API_URL}/users/${userId}/friends`,
       {
         method: "GET",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
       }
     );
     const data = await response.json();
