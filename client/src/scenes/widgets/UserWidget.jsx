@@ -10,7 +10,7 @@ import FlexBetween from "components/FlexBetween";
 import WidgetWrapper from "components/WidgetWrapper";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const UserWidget = ({ userId, picturePath }) => {
   const [user, setUser] = useState(null);
@@ -20,6 +20,9 @@ const UserWidget = ({ userId, picturePath }) => {
   const dark = palette.neutral.dark;
   const medium = palette.neutral.medium;
   const main = palette.neutral.main;
+
+  const routeLocation = useLocation();
+  const isOnProfilePage = routeLocation.pathname.startsWith("/profile/");
 
   const getUser = async () => {
     const response = await fetch(
@@ -78,7 +81,7 @@ const UserWidget = ({ userId, picturePath }) => {
             <Typography color={medium}>{friends.length} friends</Typography>
           </Box>
         </FlexBetween>
-        <ManageAccountsOutlined />
+        {!isOnProfilePage && <ManageAccountsOutlined />}
       </FlexBetween>
 
       <Divider />
@@ -131,7 +134,7 @@ const UserWidget = ({ userId, picturePath }) => {
               <Typography color={medium}>Social Network</Typography>
             </Box>
           </FlexBetween>
-          <EditOutlined sx={{ color: main }} />
+          {!isOnProfilePage && <EditOutlined sx={{ color: main }} />}
         </FlexBetween>
 
         <FlexBetween gap="1rem">
@@ -144,7 +147,7 @@ const UserWidget = ({ userId, picturePath }) => {
               <Typography color={medium}>Network Platform</Typography>
             </Box>
           </FlexBetween>
-          <EditOutlined sx={{ color: main }} />
+          {!isOnProfilePage && <EditOutlined sx={{ color: main }} />}
         </FlexBetween>
       </Box>
     </WidgetWrapper>
