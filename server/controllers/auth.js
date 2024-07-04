@@ -64,6 +64,8 @@ export const deleteUser = async (req, res) => {
 
     await Post.deleteMany({ userId });
 
+    await User.updateMany({}, { $pull: { friends: userId } }, { multi: true });
+
     await User.findByIdAndDelete(userId);
 
     res.status(200).json({ msg: "User deleted successfully." });
