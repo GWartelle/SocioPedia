@@ -76,7 +76,9 @@ export const deleteUser = async (req, res) => {
 
     // Delete the posts images from the bucket
     for (const imageUrl of imageUrls) {
-      await deleteImageFromS3(imageUrl);
+      if (imageUrl) {
+        await deleteImageFromS3(imageUrl);
+      }
     }
 
     // Delete the user's posts
