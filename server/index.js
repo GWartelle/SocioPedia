@@ -59,7 +59,10 @@ const upload = multer({
     bucket: process.env.AWS_BUCKET_NAME,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     key: function (req, file, cb) {
-      cb(null, Date.now().toString() + "-" + file.originalname);
+      const filename = file.originalname
+        .replace(/\s+/g, "-")
+        .replace(/[^\w.-]+/g, "");
+      cb(null, Date.now().toString() + "-" + filename);
     },
   }),
 });
