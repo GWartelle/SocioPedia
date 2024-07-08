@@ -67,14 +67,17 @@ export const deleteUser = async (req, res) => {
     const user = await User.findById(userId);
     const profilePictureUrl = user.userPicturePath;
 
+    // Get the user's posts and their image URLs
+    const posts = await Post.find({ userId });
+    const imageUrls = posts.map((post) => post.picturePath);
+
+    // Delete the posts images from the bucket
+    for (const imageUrl of imageUrls) {
+      await deleteImageFromS3(imageUrl);
+    }
+
     // Delete the user's posts
     await Post.deleteMany({ userId });
-
-    // Get the deleted posts and delete their images
-    const deletedPosts = await Post.find({ userId }).exec();
-    for (const post of deletedPosts) {
-      await deleteImageFromS3(post.picturePath);
-    }
 
     // Delete the user's profile picture from the bucket
     await deleteImageFromS3(profilePictureUrl);
