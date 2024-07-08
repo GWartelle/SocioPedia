@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 import Post from "../models/Post.js";
+import { deleteImageFromS3 } from "./aws.js";
 
 /* REGISTER USER */
 export const register = async (req, res) => {
@@ -62,10 +63,24 @@ export const deleteUser = async (req, res) => {
   try {
     const userId = req.params.userId;
 
+    // Find the user in the database and get their profile picture URL
+    const user = await User.findById(userId);
+    const profilePictureUrl = user.userPicturePath;
+
+    // Delete the user's posts from the database and their images from the bucket
+    const posts = await Post.find({ userId });
+    for (const post of posts) {
+      await deleteImageFromS3(post.picturePath);
+    }
     await Post.deleteMany({ userId });
 
+    // Delete the user's profile picture from the bucket
+    await deleteImageFromS3(profilePictureUrl);
+
+    // Delete the user from other users' friend list
     await User.updateMany({}, { $pull: { friends: userId } }, { multi: true });
 
+    // Delete the user from the database
     await User.findByIdAndDelete(userId);
 
     res.status(200).json({ msg: "User deleted successfully." });
