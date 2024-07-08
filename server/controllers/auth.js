@@ -65,7 +65,10 @@ export const deleteUser = async (req, res) => {
 
     // Find the user in the database and get their profile picture URL
     const user = await User.findById(userId);
-    const profilePictureUrl = user.userPicturePath;
+    const profilePictureUrl = user.picturePath;
+
+    // Delete the user's profile picture from the bucket
+    await deleteImageFromS3(profilePictureUrl);
 
     // Get the user's posts and their image URLs
     const posts = await Post.find({ userId });
@@ -78,9 +81,6 @@ export const deleteUser = async (req, res) => {
 
     // Delete the user's posts
     await Post.deleteMany({ userId });
-
-    // Delete the user's profile picture from the bucket
-    await deleteImageFromS3(profilePictureUrl);
 
     // Delete the user from other users' friend list
     await User.updateMany({}, { $pull: { friends: userId } }, { multi: true });

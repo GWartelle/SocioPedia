@@ -1,4 +1,7 @@
 import { S3Client, DeleteObjectCommand } from "@aws-sdk/client-s3";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const s3 = new S3Client({
   region: process.env.AWS_REGION,
@@ -24,6 +27,7 @@ async function deleteImageFromS3(imageUrl) {
 
     const deleteCommand = new DeleteObjectCommand(deleteParams);
     await s3.send(deleteCommand);
+
     console.log(`Image with key ${imageKey} deleted from S3 bucket.`);
   } catch (err) {
     console.error(`Error deleting image with key ${imageKey}: ${err.message}`);
