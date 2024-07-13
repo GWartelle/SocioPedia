@@ -250,7 +250,7 @@ For now you can only find mockup comments in this section, as the comment featur
 On the right of the screen there's an advertisement panel, which is also a mockup feature.
 And finally under this panel, you have the `FriendList` panel, with all of your friends, with a remove-friend icon on their right if you want to remove them from the list.
 
-Speaking of friends, if your click on a user's name, you are redirected to his/her profile page.
+Speaking of friends, if you click on a user's name, you are redirected to his/her profile page.
 
 ![Sociopedia Profile Page Screenshot](./public/assets/profile_screen.png)
 
