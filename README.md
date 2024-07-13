@@ -183,7 +183,7 @@ If you want to clone this project, you must have [Node.js](https://nodejs.org/en
 
    This variable is simply used to store the address of your server.
    So if you only intend to use this project on your local machine, you can leave it as `http://localhost:PORT`, just making sure that PORT matches the port you choose in your backend `.env` file.
-   But if you wish to deploy this app, you'll have to put the URL your server in `REACT_APP_API_URL`.
+   But if you wish to deploy this app, you'll have to put the URL of your server in `REACT_APP_API_URL`.
 
 4. Once it's done, change the name of the file to `.env` :
 
