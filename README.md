@@ -401,7 +401,9 @@ async function deleteImageFromS3(imageUrl) {
 }
 ```
 
-First I add to reset a S3Client, as implementing this function directly in the main file of the server would have been too cumbersome.
+First I had to reset a S3Client, as implementing this function directly in the main file of the server would have been too cumbersome.
+
+Next I created a `getKeyFromUrl` function that extrats the key of an image to delete based on its URL by removing everything before the last `/`.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
