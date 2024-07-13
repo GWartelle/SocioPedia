@@ -309,7 +309,7 @@ app.post("/posts", verifyToken, upload.single("picture"), createPost);
 The first thing to do was to create a S3Client, using the credentials of the bucket.
 
 Next it was time to create the function `upload` for uploading files in the bucket.
-Multer, as this is the tool used for uploads in this project, connects with `s3` the S3Client I just set up, and the `bucket` using bucket name stored in my .env file.
+Multer, as this is the tool used for uploads in this project, uses the S3Client I just set up `s3`, and connects with my bucket using the `AWS_BUCKET_NAME` stored in my .env file.
 
 And then Multer creates a `key` to identify the uploaded file, by combining the current date in Unix time with the name of the file without spaces or special characters.
 
