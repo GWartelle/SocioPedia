@@ -361,7 +361,7 @@ export const createPost = async (req, res) => {
 };
 ```
 
-To simplify, I just kept the `picturePath` field of the newly created MongoDB document.
+To simplify things here, I just kept the `picturePath` field in these MongoDB documents.
 
 As you can see, the `register` and `createPost` controllers are both getting the image URL with `req.file.location`, which is then stored in the database.
 
