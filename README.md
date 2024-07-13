@@ -181,7 +181,7 @@ If you want to clone this project, you must have [Node.js](https://nodejs.org/en
    ```
 
    This variable is simply used to store the address of your server.
-   So if you only intend to use this project on your local machine, you can leave it as `http://localhost:PORT`, just changing PORT to match the port you choose in your backend `.env` file.
+   So if you only intend to use this project on your local machine, you can leave it as `http://localhost:PORT`, just making sure that PORT matches the port you choose in your backend `.env` file.
    But if you wish to deploy this app, you'll have to put the URL your server in `REACT_APP_API_URL`.
 
 4. Once it's done, change the name of the file to `.env` :
@@ -202,35 +202,63 @@ If you want to clone this project, you must have [Node.js](https://nodejs.org/en
 
 <h2 id="usage">Usage</h2>
 
-![ChatApp Login Page Screenshot](./public/login_screen.png)
+![Sociopedia Login Page Screenshot](./public/assets/login_screen.png)
 
 You will land on the login page.
-Here you can obviously log in, using your username and your password.
-But if you don't have an account yet, you can click on `Don't have an account?` to be redirected to the register page.
+Here you can obviously log in, using your email and your password.
+But if you don't have an account yet, you can click on `Don't have an account? Sign Up here.` to be redirected to the register page.
 
-![ChatApp Register Page Screenshot](./public/register_screen.png)
+![Sociopedia Register Page Screenshot](./public/assets/register_screen.png)
 
-Here you will be asked to enter your full name, your username, your password, and to confirm it.
-You'll also be asked to choose between `Male` and `Female` (only used to generate a random profile picture for your account).
-If you already created an accoount you can just click on `Already have an account?`.
+Here you will be asked to enter your first name, your last name, your location, your occupation, put your profile picture in the dropzone, enter your email, and finally your password.
+If you already created an accoount you can just click on `Already have an account? Login here.`.
+Once registered you will be redirected back to the login page.
 
-![ChatApp Home Page Screenshot](./public/home_screen.png)
+![Sociopedia Home Page Screenshot](./public/assets/home_screen.png)
 
 Once logged in, you'll land on the home page.
-On the left of the page you'll see the full list of users.
-If you want to find a specific user, you can search for him/her using the search bar at the top.
-Once you found the user you want to talk to, simply click on his/her profile picture or name.
+To make things clear, this web app has a lot of mockup features.
+This is intentional as this leaves the opportunity to implement a lot of new things once the tutorial is finished.
 
-![ChatApp Discussion Page Screenshot](./public/discussion_screen.png)
+So, now that this is out of the way, let's dive into this home page.
+At the top of the screen we have the navigation bar, with a search bar on the left.
+This is the first mockup feature, as you can enter some text into the search bar, but clicking the search icon won't do anything.
+This would be the opportunity to implement a profile searching feature.
 
-Once you selected a user, it'll open the discussion panel.
-Here you can simply type any message you want in the message bar at the bottom of the screen, and click on the send icon to the right to send your message.
-Your message will be instantly sent to the other user, and appear on the page.
+On the right side we have the name of the user in a select menu, with the options of logging out and deleting the account.
+Besides that, the message, notification, and help icons are also mockup features, open for implementation.
+But the sun icon does work, as it toggles the dark mode on.
 
-![ChatApp Delete Page Screenshot](./public/delete_screen.png)
-Lastly, once you're done using the app, you can simply click on the logout icon at the bottom left of the page to instantly log out.
-And if you ever want to delete your account, you can click on the trash icon.
-A modal will then appear on the screen, and ask you if you are sure you want to delete your account.
+![Sociopedia Dark Mode Screenshot](./public/assets/dark_screen.png)
+
+On the main page we found mutiple panels.
+On the left, there is the User panel, with all the your info.
+Here there are some mockup features too: the account parameters icon and the social profiles are here for demonstration sake.
+And the views and impressions numbers are randomly generated at the creation of the user's profile.
+
+On the center of the screen, we find the feed, with the Post panel at the top.
+The post panel allows you to enter a message to post on the feed for all the other users to see.
+You also have the possibility to send an image along with your message, by cliking on the image option, which pops off a dropzone where you can drag your image.
+As for the other options (Clip, Attachment and Audio), those are mockup features as well.
+
+On the feed of Sociopedia, you can see all the other users' posts.
+On the top right of every posts (except yours), there is an add friend icon which adds the creator of this post to your friend list.
+At the bottom of each post panel you have a heart icon for liking the post, and a comment icon for opening the comment section.
+For now you can only find mockup comments in this section, as the comment feature is not implemented yet.
+
+On the right of the screen there's an advertisement panel, which is also a mockup feature.
+And finally under this panel, you have the FriendList panel, with all of your friends, with an icon on their right if you want to remove them from the list.
+
+Speaking of friends, if your click on a user's name, you are redirected to his/her profile page.
+
+![Sociopedia Profile Page Screenshot](./public/assets/profile_screen.png)
+
+On the top left of this page, you can find the User panel once again, but with the info of the user you cliked on this time.
+Under this panel, there is also the FriendList panel, but only with the friends of this user.
+
+On the center of the screen, there is also a feed, but this one only contains the posts of the user of this profile page.
+
+Lastly, if you want to get back to the home page, you can simply click on the `Sociopedia` logo in the top left of the screen. And if you want to log out (or delete your account), you can do so by clicking the select menu with your user name in the top right of the screen.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -238,176 +266,144 @@ A modal will then appear on the screen, and ask you if you are sure you want to 
 
 <h2 id="modifications">Modifications</h2>
 
-Compared to the original project, I decided to tweak things a little bit: I changed the background, I got rid of the notification sound and the shaking animation of new messages as it was getting rather annoying 😅, etc ...
+Compared to the original project, I changed some things here and there: I added a delete user account feature, I removed the possibility to add yourself to your own friend list, I also removed the possibility to create a post from the profile page of a user, etc ...
 
-But one major thing I added to this project is the delete account feature, as I think it really is a requirement.
+But one major thing I added to this project is the storage of uploaded images in an AWS S3 bucket, instead of storing them directly on the server. I decided to implement this because I deployed this project on Render, and the ability to store files on it is rather limited, as its file system is ephemeral.
 
-So I wanted to share with you how I did to implement this function.
-To begin with, let's take a look a the backend logic, the `deleteAccount` controller :
+So I wanted to share with you how I managed to implement this cloud storage.
+Of course the first part was to create an AWS account, and create a new S3 bucket.
+
+Once this was done, it was time to set this up on my server :
 
 ```js
-export const deleteAccount = async (req, res) => {
- try {
-   const user = req.user;
-
-   // Delete the user's conversations
-   const conversations = await Conversation.find({ participants: user._id });
-   for (const conversation of conversations) {
-     const messages = await Message.find({ conversation: conversation._id });
-     for (const message of messages) {
-       await Message.deleteOne({ _id: message._id });
-     }
-     await Conversation.deleteOne({ _id: conversation._id });
-   }
-
-   // Delete the user
-   await User.findByIdAndDelete(user._id);
-
-   res.clearCookie("jwt");
-   res.status(204).json({ message: "Account deleted successfully" });
- } catch (error) {
-   console.error("Error in delete account controller", error.message);
-   res.status(500).json({ error: "Internal Server Error" });
- }
+/* AWS SDK SET UP */
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
 ```
 
-After getting the user from the request sent by the frontend, the controller finds all the conversations this user had.
-And within each of these conversations, the controller goes through all the messages and deletes them one by one.
-
-Once all the messages from a conversation are deleted, it is time to delete the conversation itself, and then tackle the next one.
-The controller reapeat this cycle until every messages and every conversations this user had have been deleted.
-
-When this is done, the only thing left to do for the controller is to delete the user itself, and then clear its token from the cookies to effectively log the user out.
-
-And now let's take a look at the frontend logic that deals with this, the `useDelete` hook :
+The first thing to do was to create a S3Client, using the credentials of my AWS S3 bucket.
 
 ```js
-const useDelete = () => {
-  const [loading, setLoading] = useState(false);
-  const { setAuthUser } = useAuthContext();
+/* FILE STORAGE */
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: process.env.AWS_BUCKET_NAME,
+    contentType: multerS3.AUTO_CONTENT_TYPE,
+    key: function (req, file, cb) {
+      const filename = file.originalname
+        .replace(/\s+/g, "-")
+        .replace(/[^\w.-]+/g, "");
+      cb(null, Date.now().toString() + "-" + filename);
+    },
+  }),
+});
+```
 
-  const deleteAccount = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/auth/delete-account", {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      });
-      if (!res.ok) {
-        throw new Error("Failed to delete account");
-      }
+Next it was time to create the function for uploading files in the bucket.
+Multer, as this is the tool used for uploads in this project, connects with `s3` the S3Client I just set up, and the `bucket` with the bucket name stored in the .env file.
 
-      localStorage.removeItem("chat-user");
-      setAuthUser(null);
-      toast.success("Successfully deleted account!");
-    } catch (error) {
-      toast.error(error.message);
-    } finally {
-      setLoading(false);
+And then Multer creates a `key` to identify the uploaded file, by combining the current date in Unix time with the name of the file without spaces or special characters.
+
+```js
+/* ROUTES WITH FILES */
+app.post("/auth/register", upload.single("picture"), register);
+app.post("/posts", verifyToken, upload.single("picture"), createPost);
+```
+
+This function is then called as a middleware in the register and posts routes, before the register and createPost controllers as they are the only ones with the image upload feature.
+
+```js
+/* REGISTER USER */
+export const register = async (req, res) => {
+  try {
+    /* ... */
+    const picturePath = req.file.location;
+
+    const newUser = new User({
+      /* ... */
+      picturePath,
+      /* ... */
+    });
+    const savedUser = await newUser.save();
+    res.status(201).json(savedUser);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/* CREATE */
+export const createPost = async (req, res) => {
+  try {
+    /* ... */
+    let picturePath;
+
+    if (req.file) {
+      picturePath = req.file.location;
     }
-  };
 
-  return { loading, deleteAccount };
+    const newPost = new Post({
+      /* ... */
+      picturePath,
+      /* ... */
+    });
+    await newPost.save();
+
+    const post = await Post.find();
+    res.status(201).json(post);
+  } catch (err) {
+    res.status(409).json({ message: err.message });
+  }
 };
 ```
 
-This React hook first sets up a loading state, which is initiated to false, and gets the setter of the authentication context.
+To simplify, I just kept the `picturePath` field of the newly created MongoDB document.
 
-The `deleteAccount` function itself then sets the loading state to true, for the time of the API call, and tries to fetch for the `delete-account` route of the backend.
+As you can see, the `register` and `createPost` controllers are both getting the image URL with `req.file.location`, which is then stored in the database.
 
-After checking if the API responded correctly, the hook proceeds to remove the user from the local storage, then sets the authentication context to null and notifies the user of the successful deletion of the account.
-
-Finally, the hook sets the loading state back to false.
-This hooks returns the loading state itself and the `deleteAccount` function.
-
-Most of the logic is now dealt with, the only thing left to do for the frontend is to call this hook, in the DeleteButton component (the trash icon) :
+But aside from storing uploaded images in this S3 bucket, I also implemented the possibility to delete them if the user deletes his/her account.
 
 ```js
-const DeleteButton = () => {
-  const { loading, deleteAccount } = useDelete();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const s3 = new S3Client({
+  region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
+});
 
-  const handleDeleteAccount = async () => {
-    await deleteAccount();
-    setIsModalOpen(false);
-  };
+function getKeyFromUrl(url) {
+  const index = url.lastIndexOf("/");
+  return url.substring(index + 1);
+}
 
-  return (
-    <div>
-      {!loading ? (
-        <>
-          <BiTrash
-            className="w-6 h-6 text-white cursor-pointer"
-            title="Delete Account"
-            onClick={() => setIsModalOpen(true)}
-          />
-          <ConfirmationModal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-            onConfirm={handleDeleteAccount}
-          />
-        </>
-      ) : (
-        <span className="loading loading-spinner"></span>
-      )}
-    </div>
-  );
-};
+async function deleteImageFromS3(imageUrl) {
+  try {
+    const imageKey = getKeyFromUrl(imageUrl);
+
+    const deleteParams = {
+      Bucket: process.env.AWS_BUCKET_NAME,
+      Key: imageKey,
+    };
+
+    const deleteCommand = new DeleteObjectCommand(deleteParams);
+    await s3.send(deleteCommand);
+
+    console.log(`Image with key ${imageKey} deleted from S3 bucket.`);
+  } catch (err) {
+    console.error(`Error deleting image with key ${imageKey}: ${err.message}`);
+  }
+}
 ```
 
-This component first gets the `loading` state and the `deleteAccount` function from the `useDelete()` hook.
-
-Next, it creates a `isModalOpen` state to control the display of the `ConfirmationModal` component, which is by default set to false.
-
-The `deleteAccount()` function is called by the `handleDeleteAccount` handle, which also sets the `setIsModalOpen` state to false.
-
-When the trash icon is clicked, the `isModalOpen` state is set to true.
-This state is passed on to `ConfirmationModal`, along with its setter, and the `handleDeleteAccount` handle.
-
-So, let's finally take a look at this `ConfirmationModal` component :
-
-```js
-const ConfirmationModal = ({ isOpen, onRequestClose, onConfirm }) => {
-  return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Confirmation Modal"
-    >
-      <h2 className="text-xl font-bold mb-4 text-gray-200">Delete Account</h2>
-      <p className="text-lg font-semibold mb-4 text-gray-300">
-        Are you sure you want to delete your account?
-      </p>
-      <div className="flex justify-evenly">
-        <button
-          className="btn w-5/12 btn-sm mt-2 border border-slate-700 hover:text-white"
-          onClick={onRequestClose}
-        >
-          No
-        </button>
-        <button
-          className="btn w-5/12 btn-sm mt-2 border border-slate-700 hover:bg-red-700 hover:border-red-700 hover:text-white"
-          onClick={onConfirm}
-        >
-          Yes
-        </button>
-      </div>
-    </Modal>
-  );
-};
-```
-
-The `isOpen` attribute of this modal controls its display based on the `isModalOpen` state that has been passed on, which can also be set back to false with `onRequestClose`.
-
-This modal simply asks the user to make a choice between `No` which calls `onRequestClose` and closes the modal, and `Yes` which calls the `deleteAccount` function using the handle passed on to `onConfirm`.
-
-Once this is done, the user's account is effectively deleted, and he/she is sent back to the login page.
-
-And that's all for the delete account feature !
+First I add to reset a S3Client, as implementing this function directly in the main file of the server would have been too cumbersome.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- IMPROVEMENT  -->
 
 <h2 id="improvements">Improvements</h2>
 
