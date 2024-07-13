@@ -59,7 +59,7 @@ Sociopedia is a social media web app, built using the MERN Stack (MongoDB, Expre
 On the backend, we have some basic CRUD operations: creating an account, logging in and out, and deleting an account.
 Passwords are encrypted using Bcrypt, the authentication and authorization is delt with using JSON Web Token, images are uploaded using Multer and are stored in an AWS S3 bucket.
 
-On the frontend, we use Redux for global state management, Axios as HTTP client for API requests, Formik for form state management and validation, and React Dropzone to collect images upload. The styling is done using Emotion.
+On the frontend, we use React Router for navigation as this is a SPA, we use Redux Toolkit for global state management, Axios as HTTP client for API requests, Formik and yup for form management and validation, and React Dropzone to collect images upload. The styling is done using Emotion.
 
 This project has been deployed on Render, using a free tier account, so the app has some spin up time before loading.
 
@@ -78,6 +78,7 @@ This project has been deployed on Render, using a free tier account, so the app 
 
 [![CreateReactApp](https://img.shields.io/badge/Create_React_App-09D3AC?style=for-the-badge&logo=createreactapp&logoColor=FFF)](https://create-react-app.dev/)
 [![ReactRouter](https://img.shields.io/badge/React_Router-F44250?style=for-the-badge&logo=reactrouter&logoColor=FFF)](https://reactrouter.com/en/main)
+[![ReduxToolkit](https://img.shields.io/badge/Redux_Toolkit-BA8FFF?style=for-the-badge&logo=redux&logoColor=FFF)](https://redux-toolkit.js.org/)
 [![Formik](https://img.shields.io/badge/Formik-172B4D?style=for-the-badge&logo=formik&logoColor=FFF)](https://jwt.io/)
 [![Axios](https://img.shields.io/badge/Axios-671DDF?style=for-the-badge&logo=axios&logoColor=FFF)](https://jwt.io/)
 [![JsonWebToken](https://img.shields.io/badge/JWT-00B9F1?style=for-the-badge&logo=jsonwebtokens&logoColor=FFF)](https://jwt.io/)
@@ -271,7 +272,7 @@ Compared to the original project, I changed some things here and there: I added 
 But one major thing I added to this project is the storage of uploaded images in an AWS S3 bucket, instead of storing them directly on the server. I decided to implement this because I deployed this project on Render, and the ability to store files on it is rather limited, as its file system is ephemeral.
 
 So I wanted to share with you how I managed to implement this cloud storage.
-Of course the first part was to create an AWS account, and create a new S3 bucket.
+Of course the first part was to create an AWS account, create a new S3 bucket, and put all its credentials in my .env file.
 
 Once this was done, it was time to set this up on my server :
 
@@ -284,11 +285,7 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
-```
 
-The first thing to do was to create a S3Client, using the credentials of my AWS S3 bucket.
-
-```js
 /* FILE STORAGE */
 const upload = multer({
   storage: multerS3({
@@ -303,20 +300,22 @@ const upload = multer({
     },
   }),
 });
-```
 
-Next it was time to create the function for uploading files in the bucket.
-Multer, as this is the tool used for uploads in this project, connects with `s3` the S3Client I just set up, and the `bucket` with the bucket name stored in the .env file.
-
-And then Multer creates a `key` to identify the uploaded file, by combining the current date in Unix time with the name of the file without spaces or special characters.
-
-```js
 /* ROUTES WITH FILES */
 app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 ```
 
-This function is then called as a middleware in the register and posts routes, before the register and createPost controllers as they are the only ones with the image upload feature.
+The first thing to do was to create a S3Client, using the credentials of the bucket.
+
+Next it was time to create the function `upload` for uploading files in the bucket.
+Multer, as this is the tool used for uploads in this project, connects with `s3` the S3Client I just set up, and the `bucket` using bucket name stored in my .env file.
+
+And then Multer creates a `key` to identify the uploaded file, by combining the current date in Unix time with the name of the file without spaces or special characters.
+
+This function is then called as a middleware in the `register` and `posts` routes, before the `register` and `createPost` controllers as they are the only ones with the image upload feature.
+
+Talking about these controllers, here is how they look like :
 
 ```js
 /* REGISTER USER */
@@ -337,7 +336,7 @@ export const register = async (req, res) => {
   }
 };
 
-/* CREATE */
+/* CREATE POST */
 export const createPost = async (req, res) => {
   try {
     /* ... */
@@ -366,7 +365,7 @@ To simplify, I just kept the `picturePath` field of the newly created MongoDB do
 
 As you can see, the `register` and `createPost` controllers are both getting the image URL with `req.file.location`, which is then stored in the database.
 
-But aside from storing uploaded images in this S3 bucket, I also implemented the possibility to delete them if the user deletes his/her account.
+But aside from storing uploaded images in this S3 bucket, I also had to implement how to delete them from the bucket if the user deletes his/her account.
 
 ```js
 const s3 = new S3Client({
@@ -401,24 +400,78 @@ async function deleteImageFromS3(imageUrl) {
 }
 ```
 
-First I had to reset a S3Client, as implementing this function directly in the main file of the server would have been too cumbersome.
+First I had to set a new S3Client, because this is in another file, as implementing this function directly in the main file of the server would have been too cumbersome.
 
-Next I created a `getKeyFromUrl` function that extrats the key of an image to delete based on its URL by removing everything before the last `/`.
+Next I created a `getKeyFromUrl` function that extracts the key of an image to delete based on its URL by removing everything before the last `/`.
+
+Then comes the `deleteImageFromS3` function which takes the URL of an image, extracts its key using `getKeyFromUrl`, sets up the parameters of the deletion with the name of the bucket and the key of the image, and then sends a `DeleteObjectCommand` with these parameters.
+
+The last thing to do is to use this `deleteImageFromS3` function in the `deleteUser` controller:
+
+```js
+/* DELETE USER */
+export const deleteUser = async (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    // Find the user in the database and get their profile picture URL
+    const user = await User.findById(userId);
+    const profilePictureUrl = user.picturePath;
+
+    // Delete the user's profile picture from the bucket
+    await deleteImageFromS3(profilePictureUrl);
+
+    // Get the user's posts and their image URLs
+    const posts = await Post.find({ userId });
+    const imageUrls = posts.map((post) => post.picturePath);
+
+    // Delete the posts images from the bucket
+    for (const imageUrl of imageUrls) {
+      if (imageUrl) {
+        await deleteImageFromS3(imageUrl);
+      }
+    }
+
+    // Delete the user's posts
+    await Post.deleteMany({ userId });
+
+    // Delete the user from other users' friend list
+    await User.updateMany({}, { $pull: { friends: userId } }, { multi: true });
+
+    // Delete the user from the database
+    await User.findByIdAndDelete(userId);
+
+    res.status(200).json({ msg: "User deleted successfully." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+```
+
+After getting the `userId` from the request, this controller first finds the user in the database, gets the URL of his/her profile picture and then deletes it with `deleteImageFromS3`.
+
+The next thing to do is to get all the posts this user made, and then map the image's URL of each of these posts to an `imageUrls` variable.
+After this, the controller loops over each `imageUrl` in `imageUrls` and deletes it from the bucket if it exists (as it is possible to create a post without an image), using `deleteImageFromS3` once again.
+
+Finally, the controller just needs to update the MongoDB database by deleting all the posts of the user, removing him/her from the friend list of all the other users, and the deleting him/her profile.
+
+And this is how I implemented an AWS cloud storage for my web app !
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <h2 id="improvements">Improvements</h2>
 
-As this project is primarily built for training purposes, it is rather light in terms of features.
+As mentioned multiple times in the [usage](#usage) section, this project leaves room for a lot of features to be built.
 Therefore, if I had more time on my hands to improve this web app, here are the features I would implement :
 
-- Firstly, the most important point in my opinion, would be to add responsivity. This is a crucial feature for all modern web apps, and this project lacks it.
-- Secondly, I would add a friend list feature. Instead of being able to send messages to every users, one user should have to ask another to be his/her friend before sending him/her a message.
-- Thirdly, it'd be a great improvement if it was possible to upload images, videos and audios in discussions, as it is a staple feature in most real-time messaging apps.
-- Fourthly, it would be rather logical to add some account update feature. The user would be able to choose a different profile picture, select a specific emoji to represent his/her account, and could change his/her username or password.
-- Fifthly, in the same vein of the preceding feature, it would be coherent to have a password retrieval feature, as it is a staple of all modern apps.
+- Firstly, I'd start by implementing a password confirmation to the register page, and I'd also add a password retrieval feature, as these are staples of all modern apps.
+- Secondly, really implementing the commenting feature is a must have. Being able to comment other users' posts is a crucial part of every other social medias.
+- Thirdly, I would upgrade the friend list feature. Instead of being able to add anyone as a friend, the user should first have to send a friend request.
+- Fourthly, even if it'd represent a lot of work, it would be great to implement the instant messaging system. Based on the improved friend list, users could send private messages to their friends.
+- Fifthly, with the comments properly implemented, the improved friend list, and the private messages, a nice feature to complement all of this would be notifications. Users could know when one of their friends creates a new post, when someone comments one of their own posts and when they receive a new message.
+- Sixtly, even if uploading images is a great start, it'd be nice to also have videos and audios uploads for posts.
 
-After that, this project could benefit from other little tweaks like ordering other users' profiles based on which discussion is the most recent, or notifying the user when he/she receives a new message from another discussion, but I think this would be a good start.
+After that, this project could benefit from a lot of other changes like being able to update the user account, having real counts of views and impressions, adding the date and time to posts, really implementing the search bar, having the option for users to change/delete their posts, or being able to create an account using google, apple or other credentials, but I think this should be enough to begin with.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -438,9 +491,9 @@ And if you'd like to get in touch with me, feel free to reach out on [LinkedIn](
 
 <h2 id="acknowledgments">Acknowledgments</h2>
 
-As mentionned above, this project was made following this [tutorial](https://www.youtube.com/watch?v=HwCqsOis894).
+As mentionned above, this project was made following this [tutorial](https://www.youtube.com/watch?v=K8YELRmUb5o).
 So I would like to thank its creator for his amazing work.
-If you want to go check the github of his tutorial you can do so right [here](https://github.com/burakorkmez/mern-chat-app?tab=readme-ov-file).
+If you want to go check the github of his tutorial you can do so right [here](https://github.com/ed-roh/mern-social-media).
 Feel free to give him a star, as his work was well structured and his explanations clear and useful.
 
 And of course I would like to thank you for taking the time to read through all this !

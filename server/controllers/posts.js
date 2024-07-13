@@ -1,7 +1,7 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
 
-/* CREATE */
+/* CREATE POST */
 export const createPost = async (req, res) => {
   try {
     const { userId, description } = req.body;
@@ -32,7 +32,7 @@ export const createPost = async (req, res) => {
   }
 };
 
-/* READ */
+/* READ POSTS */
 export const getFeedPosts = async (req, res) => {
   try {
     const post = await Post.find();
