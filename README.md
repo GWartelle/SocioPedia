@@ -466,10 +466,10 @@ Therefore, if I had more time on my hands to improve this web app, here are the 
 
 1. I'd start by implementing a password confirmation to the register page, and I'd also add a password retrieval feature, as these are staples of all modern apps.
 2. Really implementing the commenting feature is a must have. Being able to comment other users' posts is a crucial part of every other social medias.
-3. I would upgrade the friend list feature. Instead of being able to add anyone as a friend, the user should first have to send a friend request.
+3. Then, I would upgrade the friend list feature. Instead of being able to add anyone as a friend, the user should first have to send a friend request.
 4. Even if it'd represent a lot of work, it would be great to implement the instant messaging system. Based on the improved friend list, users could send private messages to their friends.
 5. With the comments properly implemented, the improved friend list, and the private messages, a nice feature to complement all of this would be notifications. Users could know when one of their friends creates a new post, when someone comments one of their own posts and when they receive a new message.
-6. Even if uploading images is a great start, it'd be nice to also have videos and audios uploads for posts.
+6. Finally, even if uploading images could be enough, it'd be nice to also have videos and audios uploads for posts.
 
 After that, this project could benefit from a lot of other changes like being able to update the user account, having real counts of views and impressions, adding the date and time to posts, really implementing the search bar, having the option for users to change/delete their posts, or being able to create an account using google, apple or other credentials, but I think this should be enough to begin with.
 
