@@ -269,7 +269,7 @@ Lastly, if you want to get back to the home page, you can simply click on the `S
 
 Compared to the original project, I changed some things here and there: I added a delete user account feature, I removed the possibility to add yourself to your own friend list, I also removed the possibility to create a post from the profile page of a user, etc ...
 
-But one major thing I added to this project is the storage of uploaded images in an AWS S3 bucket, instead of storing them directly on the server. I decided to implement this because I deployed this project on Render, and the ability to store files on it is rather limited, as its file system is ephemeral.
+But one major thing I added to this project is the storage of uploaded images in an AWS S3 bucket, instead of storing them directly on the server. I decided to implement this feature because I deployed this project on Render, and the ability to store files on it is rather limited, as its file system is ephemeral.
 
 So I wanted to share with you how I managed to implement this cloud storage.
 Of course the first part was to create an AWS account, create a new S3 bucket, and put all its credentials in my .env file.
