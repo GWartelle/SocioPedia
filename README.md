@@ -259,7 +259,7 @@ Under this panel, there is also the `FriendList` panel, but only with the friend
 
 On the center of the screen, there is also a feed, but this one only contains the posts of the user of this profile page.
 
-Lastly, if you want to get back to the home page, you can simply click on the `Sociopedia` logo in the top left of the screen. And if you want to log out (or delete your account), you can do so by clicking the select menu with your user name in the top right of the screen.
+Lastly, if you want to get back to the home page, you can simply click on the `Sociopedia` logo in the top left of the screen. And if you want to log out (or delete your account), you can do so by clicking the select menu with your username in the top right of the screen.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
