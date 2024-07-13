@@ -243,7 +243,7 @@ You also have the possibility to send an image along with your message, by cliki
 As for the other options (Clip, Attachment and Audio), those are mockup features as well.
 
 On the feed of Sociopedia, you can see all the other users' posts.
-On the top right of every posts (except yours), there is an add friend icon which adds the creator of this post to your friend list.
+On the top right of every posts (except yours), there is an add-friend icon which adds the creator of this post to your friend list.
 At the bottom of each post panel you have a heart icon for liking the post, and a comment icon for opening the comment section.
 For now you can only find mockup comments in this section, as the comment feature is not implemented yet.
 
