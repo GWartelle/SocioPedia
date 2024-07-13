@@ -247,15 +247,15 @@ On the top right of every posts (except yours), there is an add-friend icon whic
 At the bottom of each post panel you have a heart icon for liking the post, and a comment icon for opening the comment section.
 For now you can only find mockup comments in this section, as the comment feature is not implemented yet.
 
-On the right of the screen there's an advertisement panel, which is also a mockup feature.
+On the right of the screen there's an `Advertisement` panel, which is also a mockup feature.
 And finally under this panel, you have the `FriendList` panel, with all of your friends, with a remove-friend icon on their right if you want to remove them from the list.
 
 Speaking of friends, if you click on a user's name, you are redirected to his/her profile page.
 
 ![Sociopedia Profile Page Screenshot](./public/assets/profile_screen.png)
 
-On the top left of this page, you can find the User panel once again, but with the info of the user you cliked on this time.
-Under this panel, there is also the FriendList panel, but only with the friends of this user.
+On the top left of this page, you can find the `User` panel once again, but with the info of the user you cliked on this time.
+Under this panel, there is also the `FriendList` panel, but only with the friends of this user.
 
 On the center of the screen, there is also a feed, but this one only contains the posts of the user of this profile page.
 
