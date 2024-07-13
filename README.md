@@ -248,7 +248,7 @@ At the bottom of each post panel you have a heart icon for liking the post, and 
 For now you can only find mockup comments in this section, as the comment feature is not implemented yet.
 
 On the right of the screen there's an advertisement panel, which is also a mockup feature.
-And finally under this panel, you have the `FriendList` panel, with all of your friends, with an icon on their right if you want to remove them from the list.
+And finally under this panel, you have the `FriendList` panel, with all of your friends, with a remove-friend icon on their right if you want to remove them from the list.
 
 Speaking of friends, if your click on a user's name, you are redirected to his/her profile page.
 
