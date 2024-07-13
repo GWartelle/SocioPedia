@@ -233,11 +233,11 @@ But the sun icon does work, as it toggles the dark mode on.
 ![Sociopedia Dark Mode Screenshot](./public/assets/dark_screen.png)
 
 On the main page we found mutiple panels.
-On the left, there is the User panel, with all the your info.
+On the left, there is the User panel, with all your info.
 Here there are some mockup features too: the account parameters icon and the social profiles are here for demonstration sake.
-And the views and impressions numbers are randomly generated at the creation of the user's profile.
+And the views and impressions numbers are randomly generated at the creation of your profile.
 
-On the center of the screen, we find the feed, with the Post panel at the top.
+In the center of the screen, we find the feed, with the Post panel at the top.
 The post panel allows you to enter a message to post on the feed for all the other users to see.
 You also have the possibility to send an image along with your message, by cliking on the image option, which pops off a dropzone where you can drag your image.
 As for the other options (Clip, Attachment and Audio), those are mockup features as well.
