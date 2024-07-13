@@ -56,7 +56,7 @@ This project was built following this [tutorial](https://www.youtube.com/watch?v
 
 Sociopedia is a social media web app, built using the MERN Stack (MongoDB, Express.js, React, Node.js).
 
-On the backend, we have some basic CRUD operations: creating an account, logging in and out, and deleting an account.
+On the backend, we have some basic CRUD operations: creating and deleting a user account, logging in and out, reading and updating user profiles, and creating, reading, updating posts.
 Passwords are encrypted using Bcrypt, the authentication and authorization is delt with using JSON Web Token, images are uploaded using Multer and are stored in an AWS S3 bucket.
 
 On the frontend, we use React Router for navigation as this is a SPA, we use Redux Toolkit for global state management, Axios as HTTP client for API requests, Formik and yup for form management and validation, and React Dropzone to collect images upload. The styling is done using Emotion.
