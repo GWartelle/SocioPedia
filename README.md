@@ -28,6 +28,14 @@
       </ul>
     </li>
     <li>
+      <a href="#folder-structure">Folder Structure</a>
+      <ul>
+        <li><a href="#root">Root folder</a></li>
+        <li><a href="#server">Server folder</a></li>
+        <li><a href="#client">Client folder</a></li>
+      </ul>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
@@ -54,14 +62,14 @@ If you want to take a direct look at this project, you can do so right [here](ht
 
 This project was built following this [tutorial](https://www.youtube.com/watch?v=K8YELRmUb5o).
 
-Sociopedia is a social media web app, built using the MERN Stack (MongoDB, Express.js, React, Node.js).
+Sociopedia is a social media web app, built using the MERN Stack ([MongoDB](https://www.mongodb.com/), [Express.js](https://expressjs.com/), [React](https://react.dev/), [Node.js](https://nodejs.org/en)).
 
 On the backend, we have some basic CRUD operations: creating and deleting a user account, logging in and out, reading and updating user profiles, and creating, reading, updating posts.
-Passwords are encrypted using Bcrypt, the authentication and authorization is delt with using JSON Web Token, images are uploaded using Multer and are stored in an AWS S3 bucket.
+The connection to the database is set up using [Mongoose](https://mongoosejs.com/), passwords are encrypted using [Bcrypt](https://github.com/kelektiv/node.bcrypt.js#readme), the authentication and authorization is delt with using [JSON Web Token](https://jwt.io/), images are uploaded using [Multer](https://github.com/expressjs/multer#readme) and are stored in an [AWS](https://aws.amazon.com/s3/) S3 bucket.
 
-On the frontend, we use React Router for navigation as this is a SPA, we use Redux Toolkit for global state management, Axios as HTTP client for API requests, Formik and yup for form management and validation, and React Dropzone to collect images upload. The styling is done using Emotion.
+On the frontend, we use [React Router](https://reactrouter.com/en/main) for navigation as this is a SPA, we use [Redux Toolkit](https://redux-toolkit.js.org/) for global state management, [Axios](https://axios-http.com/) as HTTP client for API requests, [Formik](https://formik.org/) and [yup](https://github.com/jquense/yup#readme) for form management and validation, and [React Dropzone](https://react-dropzone.js.org/) to collect images upload. The styling is done using [Emotion](https://emotion.sh/docs/introduction).
 
-This project has been deployed on Render, using a free tier account, so the app has some spin up time before loading.
+This project is hosted on [Render](https://render.com/) and utilizes their power-efficient servers, which spin down after periods of inactivity. As a result, you may experience a slightly longer loading time as the server spins back up for use.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -79,9 +87,58 @@ This project has been deployed on Render, using a free tier account, so the app 
 [![CreateReactApp](https://img.shields.io/badge/Create_React_App-09D3AC?style=for-the-badge&logo=createreactapp&logoColor=FFF)](https://create-react-app.dev/)
 [![ReactRouter](https://img.shields.io/badge/React_Router-F44250?style=for-the-badge&logo=reactrouter&logoColor=FFF)](https://reactrouter.com/en/main)
 [![ReduxToolkit](https://img.shields.io/badge/Redux_Toolkit-BA8FFF?style=for-the-badge&logo=redux&logoColor=FFF)](https://redux-toolkit.js.org/)
-[![Formik](https://img.shields.io/badge/Formik-172B4D?style=for-the-badge&logo=formik&logoColor=FFF)](https://jwt.io/)
-[![Axios](https://img.shields.io/badge/Axios-671DDF?style=for-the-badge&logo=axios&logoColor=FFF)](https://jwt.io/)
+[![Formik](https://img.shields.io/badge/Formik-172B4D?style=for-the-badge&logo=formik&logoColor=FFF)](https://formik.org/)
+[![Axios](https://img.shields.io/badge/Axios-671DDF?style=for-the-badge&logo=axios&logoColor=FFF)](https://axios-http.com/)
+[![Mongoose](https://img.shields.io/badge/Mongoose-A03333?style=for-the-badge&logo=mongoose&logoColor=FFF)](https://mongoosejs.com/)
 [![JsonWebToken](https://img.shields.io/badge/JWT-00B9F1?style=for-the-badge&logo=jsonwebtokens&logoColor=FFF)](https://jwt.io/)
+[![Render](https://img.shields.io/badge/Render-8A05FF?style=for-the-badge&logo=render&logoColor=FFF)](https://render.com/)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- FOLDER STRUCTURE -->
+
+<h2 id="folder-structure">Folder Structure</h2>
+
+<h3 id="root">Root folder</h3>
+
+Let me present to you the folder structure of this project, with its main components.
+
+In the root folder, we find the `README.md`, the `LICENSE`, the `package.json` for the build and start scripts, and the `.gitignore` files.
+
+The rest of the project is divided in the two folders: the `server/` folder for the backend of the app, and the `client/` folder for the frontend.
+
+<h3 id="server">Server folder</h3>
+
+In the `server/` folder, the most important files are the `index.js` file where the bases of the server is set up, the `package.json` file with all the packages needed to run the backend, and the `.env.example` file used as a base to set up the `.env` file for replicating this project.
+
+Then, in `server/`, we find multiple other folders :
+
+`routes/` with the `auth.js`, `posts.js` and `users.js` files, which set up their respective routes.
+
+`controllers` with the `auth.js`, `posts.js` and `users.js` files, which are the controllers used in the routes of the same name, and the `aws.js` file which defines the function used to delete an image from the AWS S3 bucket.
+
+`middleware/` with the `auth.js` file with verifyToken middleware.
+
+`models/` with the `Post.js` and `User.js` files which set up their respective mongoose models.
+
+And `public/` with the `assets` folder in it where we store the image for the ad.
+
+<h3 id="client">Client folder</h3>
+
+Now for the `client/` folder, the most important files are the `package.json` file once again for the packages, and `.env.example` used also to set up the `.env` file.
+
+Next, in `client/`, there is also the `public/` folder with the `index.html` file on which the app sits on, and the `assets/` folder with the different icons used in the project.
+
+Then, still in `client/`, there's the `src/` folder where most of the frontend finds its place.
+In `src/`, we find `index.js` which sets up React, `App.js` that sets up the routes, `theme.js` with the light and dark themes, and `index.css` with a few global styles.
+
+The rest of `src/` is divided in three folders: `components/`, `scenes/` and `state/`.
+
+`components/` has small components reused multiple times in the project, and `state/` simply as a file which sets up the global state management using Redux toolkit and Axios.
+
+`scenes/` has the main elements of the project, each in their respective folders which are `homePage/`, `loginPage/`, `navbar/`, `profilePage/` and `widgets/`. In the `widgets/` folder, we find all the different panels used to populate the main pages of the app.
+
+That's it for the folder structure !
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
