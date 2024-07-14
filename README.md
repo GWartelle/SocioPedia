@@ -105,29 +105,31 @@ Let me present to you the folder structure of this project, with its main compon
 
 In the root folder, we find the `README.md`, the `LICENSE`, the `package.json` for the build and start scripts, and the `.gitignore` files.
 
+We also find the `public/assets/` folder with the images used for this `README.md` file.
+
 The rest of the project is divided in the two folders: the `server/` folder for the backend of the app, and the `client/` folder for the frontend.
 
 <h3 id="server">Server folder</h3>
 
 In the `server/` folder, the most important files are the `index.js` file where the bases of the server is set up, the `package.json` file with all the packages needed to run the backend, and the `.env.example` file used as a base to set up the `.env` file for replicating this project.
 
-Then, in `server/`, we find multiple other folders :
+Then, in `server/`, we find multiple folders :
 
-`routes/` with the `auth.js`, `posts.js` and `users.js` files, which set up their respective routes.
-
-`controllers` with the `auth.js`, `posts.js` and `users.js` files, which are the controllers used in the routes of the same name, and the `aws.js` file which defines the function used to delete an image from the AWS S3 bucket.
+`controllers/` with the `auth.js`, `posts.js` and `users.js` files, which are the controllers used in the routes of the same name, and the `aws.js` file which defines the function used to delete an image from the AWS S3 bucket.
 
 `middleware/` with the `auth.js` file with verifyToken middleware.
 
 `models/` with the `Post.js` and `User.js` files which set up their respective mongoose models.
 
-And `public/` with the `assets` folder in it where we store the image for the ad.
+`public/` with the `assets` folder in it where we store the image for the ad.
+
+And `routes/` with the `auth.js`, `posts.js` and `users.js` files, which set up their respective routes.
 
 <h3 id="client">Client folder</h3>
 
 Now for the `client/` folder, the most important files are the `package.json` file once again for the packages, and `.env.example` used also to set up the `.env` file.
 
-Next, in `client/`, there is also the `public/` folder with the `index.html` file on which the app sits on, and the `assets/` folder with the different icons used in the project.
+Next, in `client/`, there is also a `public/` folder with the `index.html` file on which the app sits on, and the `assets/` folder with the different icons used in the project.
 
 Then, still in `client/`, there's the `src/` folder where most of the frontend finds its place.
 In `src/`, we find `index.js` which sets up React, `App.js` that sets up the routes, `theme.js` with the light and dark themes, and `index.css` with a few global styles.
