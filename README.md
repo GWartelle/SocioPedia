@@ -518,6 +518,8 @@ And this is how I implemented an AWS cloud storage for my web app !
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+<!-- IMPROVEMENTS -->
+
 <h2 id="improvements">Improvements</h2>
 
 As mentioned multiple times in the [usage](#usage) section, this project leaves room for a lot of features to be built.
