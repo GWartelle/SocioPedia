@@ -10,7 +10,7 @@
 <!-- PROJECT TITLE -->
 
 <div align="center">
-  <a href="https://sociopedia-6qm6.onrender.com/">
+  <a href="https://sociopedia-6qm6.onrender.com/" target="_blank" rel="noopener noreferrer">
     <img src="./public/assets/sociopedia_logo.png" alt="Sociopedia Logo"  height="70">
   </a>
 </div>
